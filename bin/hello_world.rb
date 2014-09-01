@@ -1,21 +1,26 @@
 #!/usr/bin/env ruby
-require 'fileutils'
-
-# How to steal other people shit with ruby, pt 1
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'fileutils'
+require 'theme_bandit'
 
 def init
   make_a_directory
+  ask_user_for_domain
 end
 
 def make_a_directory
   FileUtils::mkdir_p 'theme'
 end
 
+def ask_user_for_domain
+  puts 'Enter the URL of the theme you wish to download:'
+  url = gets
+  ThemeBandit::Downloader.new(url)
+end
+
 begin
   require 'theme_bandit'
-  p 'i know u cant stand it - theme bandit'
   init
 rescue LoadError => e
   require 'rubygems'

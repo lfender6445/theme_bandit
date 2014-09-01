@@ -1,10 +1,11 @@
 module ThemeBandit
   class DocumentParser
 
+    include HTTParty
     include ThemeBandit::CssParser
     include ThemeBandit::JsParser
     include ThemeBandit::HtmlParser
-    include HTTParty
+    # TODO: image parser
 
     attr_accessor :document
     attr_reader   :url
@@ -19,7 +20,11 @@ module ThemeBandit
       download_css(get_css_files)
       download_js(get_js_files)
       setup_html
-      write_html
+      write_html do
+        if true
+          ThemeBandit::RackGenerator.build
+        end
+      end
     end
 
     def make_dir(folder)
@@ -50,6 +55,7 @@ module ThemeBandit
 
     def write_html
       File.open("#{HTML_FOLDER}index.html", 'w') { |file| file.write(html_revision) }
+      yield
     end
 
   end

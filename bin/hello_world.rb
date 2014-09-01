@@ -6,6 +6,7 @@ require 'theme_bandit'
 def init
   make_a_directory
   ask_user_for_domain
+  # ask_user_if_they_want_to_start_rack_app
 end
 
 def make_a_directory
@@ -26,5 +27,3 @@ rescue LoadError => e
   require 'rubygems'
   require 'theme_bandit'
 end
-
-# exit Jeweler::Generator::Application.run!(*ARGV)

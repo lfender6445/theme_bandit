@@ -1,5 +1,3 @@
-require 'nokogiri'
-
 module ThemeBandit
   module CssParser
     def get_css_files

@@ -9,6 +9,7 @@ def init
 end
 
 def make_a_directory
+  `rm -rf theme`
   FileUtils::mkdir_p 'theme'
 end
 

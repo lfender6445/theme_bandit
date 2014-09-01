@@ -1,35 +1,55 @@
-require 'uri'
-
 module ThemeBandit
   class DocumentParser
 
     include ThemeBandit::CssParser
+    include ThemeBandit::JsParser
+    include ThemeBandit::HtmlParser
     include HTTParty
 
-    attr_reader :document, :url
+    attr_accessor :document
+    attr_reader   :url
+
+    CSS_FOLDER   =  './theme/public/css/'
+    JS_FOLDER    =  './theme/public/js/'
+    HTML_FOLDER  =  './theme/public/'
+
 
     def initialize(doc)
       @document, @url = doc, URI.parse(ThemeBandit::Downloader.url)
-      download_and_write_css(get_css_files)
-    end
-
-    def download_and_write_css(files)
-      download(files)
+      download_css(get_css_files)
+      download_js(get_js_files)
+      setup_html
+      write_html
     end
 
     def make_dir(folder)
-      FileUtils::mkdir_p "theme/#{folder}"
+      FileUtils::mkdir_p folder
     end
 
-    # return array of string/css docs
-    def download(files)
-      make_dir('css')
-      count = 0
-      files.each do |file_name|
+    def download_css(files)
+      make_dir(CSS_FOLDER)
+      files.each_with_index do |file_name, count|
         doc = self.class.get(file_name, {})
-        File.open("./theme/css/style_#{count}.css", 'w') { |file| file.write(doc) }
-        count += 1
+        new_file = file_name.split('/').last
+        File.open("#{CSS_FOLDER}#{new_file}", 'w') { |file| file.write(doc.body) }
       end
+    end
+
+    def download_js(files)
+      make_dir(JS_FOLDER)
+      files.each_with_index do |file_name, order|
+        doc = self.class.get(file_name, {})
+        new_file = file_name.split('/').last
+        File.open("#{JS_FOLDER}#{order}_#{new_file}", 'w') { |file| file.write(doc.body) }
+      end
+    end
+
+    def html_revision
+      document.to_html
+    end
+
+    def write_html
+      File.open("#{HTML_FOLDER}index.html", 'w') { |file| file.write(html_revision) }
     end
 
   end

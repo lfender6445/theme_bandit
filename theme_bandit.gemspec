@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ThemeBandit::VERSION
   spec.authors       = ["Luke Fender"]
   spec.email         = ["lfender6445@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Grab a site and all of its assets in a manageable way}
+  spec.description   = %q{Download any sites assets and convert to rack app}
   spec.homepage      = ""
   spec.license       = "MIT"
 

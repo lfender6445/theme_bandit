@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'fileutils'
 require 'theme_bandit'
@@ -15,8 +14,8 @@ end
 
 def ask_user_for_domain
   puts 'Enter the URL of the theme you wish to download:'
-  url = gets
-  ThemeBandit::Downloader.new(url)
+  url = gets.chomp
+  ThemeBandit::Downloader.get_theme(url)
 end
 
 begin

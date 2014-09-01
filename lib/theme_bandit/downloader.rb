@@ -23,7 +23,6 @@ module ThemeBandit
 
     def get_document
       doc = self.class.get(url, {})
-      binding.pry
       Nokogiri::HTML(doc)
     end
 

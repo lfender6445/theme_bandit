@@ -20,13 +20,7 @@ Or install it yourself as:
     $ gem install theme_bandit
 
 ## Usage
-
-- `theme init`
-  - displays awesome ascii art
-  - creates a dir named `./theme` if it does exist
-  - created dir is ignored by git if file exists
-  - prompts user for theme domain they want to steal
-  - grab all html css and javascripts
+`./bin/bandit`
 
 ## Contributing
 

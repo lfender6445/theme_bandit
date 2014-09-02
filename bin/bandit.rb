@@ -33,11 +33,11 @@ def ask_user_for_rack_app
     puts 'running `bundle in new directory`'
     Bundler.with_clean_env do
       `bundle install`
-      puts 'bundle exec rackup -p 3000`'
-      system('bundle exec rackup -p 3000')
     end
+    puts 'bundle exec rackup -p 3000`'
+    system('bundle exec rackup -p 3000')
   else
-    puts app_message
+    app_message
   end
 end
 

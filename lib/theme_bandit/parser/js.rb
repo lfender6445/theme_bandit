@@ -1,5 +1,7 @@
 module ThemeBandit
   module JsParser
+    include ThemeBandit::Utils
+
     def get_js_files
       script_tag_values
     end
@@ -14,11 +16,12 @@ module ThemeBandit
       script_tags.map do |tag|
         src = URI.parse(tag.attribute('src'))
         if src.absolute?
-          src
+          strip_query_string src.to_s
         else
-          "#{url.scheme}://#{url.host}#{src}"
+          strip_query_string "#{url.scheme}://#{url.host}#{src}"
         end
       end
     end
+
   end
 end

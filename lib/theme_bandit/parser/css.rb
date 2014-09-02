@@ -1,5 +1,7 @@
 module ThemeBandit
   module CssParser
+    include ThemeBandit::Utils
+
     def get_css_files
       link_tag_values
     end
@@ -14,9 +16,9 @@ module ThemeBandit
       link_tags.map do |tag|
         href = URI.parse(tag.attribute('href'))
         if href.absolute?
-          href
+          strip_query_string href.to_s
         else
-          "#{url.scheme}://#{url.host}#{href}"
+          strip_query_string "#{url.scheme}://#{url.host}#{href}"
         end
       end
     end

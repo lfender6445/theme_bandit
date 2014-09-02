@@ -1,4 +1,5 @@
 require 'html2slim/command'
+require 'sanitize'
 
 module ThemeBandit
   class RackGenerator
@@ -18,8 +19,10 @@ module ThemeBandit
     end
 
     def index_file_contents
-      index_html = File.open("#{Dir.pwd}/theme/public/index.html",'r')
-      absolute_to_relative(File.read(index_html))
+      file = File.open("#{Dir.pwd}/theme/public/index.html",'r')
+      html_content = File.read(file)
+      html = Sanitize.document(html_content, Sanitize::Config::RELAXED)#
+      absolute_to_relative(html)
     end
 
     def absolute_to_relative(contents)

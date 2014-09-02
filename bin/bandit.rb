@@ -1,11 +1,11 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby_executable_hooks
+
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
-require 'pry'
+
 require 'fileutils'
 require 'theme_bandit'
 
 def init
-  make_a_directory
   ask_user_for_domain
   ask_user_for_rack_app
 end
@@ -18,6 +18,7 @@ def ask_user_for_domain
   puts 'Enter the URL of the theme you wish to download:'
   url = gets.chomp
   `rm -rf theme`
+  make_a_directory
   ThemeBandit::Downloader.get_theme(url)
 end
 
@@ -26,17 +27,19 @@ def ask_user_for_rack_app
   answer = gets.chomp
   if answer == 'y'
     app_message
-    p 'changing directory to ./theme'
-    p 'running `bundle`'
-    p 'running `bundle exec rackup -p 3000`'
-    `cd theme;bundle;bundle exec rackup -p 3000`
+    puts 'changing directory to ./theme'
+    `cd theme`
+    puts 'running `bundle`'
+    `bundle`
+    puts 'running `bundle exec rackup -p 3000, wait a few seconds...`'
+    `bundle exec rackup -p 3000`
   else
-    p app_message
+    puts app_message
   end
 end
 
 def app_message
-  p "Your rack app can be found at #{Dir.pwd}/theme"
+  puts "Your rack apputs can be found at #{Dir.pwd}/theme"
 end
 
 begin

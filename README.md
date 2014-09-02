@@ -1,6 +1,9 @@
 # ThemeBandit
 
-i knw yu cn't stnd it - theme_bandit
+Convert any site template (Wordpress, Joomla, etc) into a rack
+application.
+
+`./bin/bandit`
 
 ## Installation
 

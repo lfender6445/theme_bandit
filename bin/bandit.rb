@@ -2,6 +2,7 @@
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
+require 'pry'
 require 'fileutils'
 require 'theme_bandit'
 
@@ -28,11 +29,13 @@ def ask_user_for_rack_app
   if answer == 'y'
     app_message
     puts 'changing directory to ./theme'
-    `cd theme`
-    puts 'running `bundle`'
-    `bundle`
-    puts 'running `bundle exec rackup -p 3000, wait a few seconds...`'
-    `bundle exec rackup -p 3000`
+    Dir.chdir 'theme'
+    puts 'running `bundle in new directory`'
+    Bundler.with_clean_env do
+      `bundle install`
+      puts 'bundle exec rackup -p 3000`'
+      system('bundle exec rackup -p 3000')
+    end
   else
     puts app_message
   end

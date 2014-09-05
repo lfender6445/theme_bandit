@@ -1,5 +1,5 @@
 module ThemeBandit
-  module Utils
+  module URLFormatter
     def strip_query_string(str)
       str.split('?').first
     end

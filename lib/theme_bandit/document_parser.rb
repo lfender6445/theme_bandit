@@ -6,6 +6,7 @@ module ThemeBandit
     include ThemeBandit::JsParser
     include ThemeBandit::HtmlParser
     # TODO: image parser
+    # TODO: font parser
 
     attr_accessor :document
     attr_reader   :url
@@ -16,7 +17,7 @@ module ThemeBandit
 
 
     def initialize(doc)
-      @document, @url = doc, URI.parse(ThemeBandit::Downloader.url)
+      @document, @url = doc, URI.parse(ThemeBandit.configuration.url)
       download_css(get_css_files)
       download_js(get_js_files)
       setup_html

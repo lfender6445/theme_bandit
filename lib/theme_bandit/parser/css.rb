@@ -1,6 +1,6 @@
 module ThemeBandit
   module CssParser
-    include ThemeBandit::Utils
+    include ThemeBandit::URLFormatter
 
     def get_css_files
       link_tag_values

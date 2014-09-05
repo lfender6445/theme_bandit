@@ -1,20 +1,18 @@
 require 'httparty'
-require 'pry'
 
 module ThemeBandit
   class Downloader
     include HTTParty
 
+    def self.get_theme(url=ThemeBandit.configuration.url)
+      new(url || error)
+    end
+
+    def self.error
+      raise 'Invalid configuration, please configure through ./bin wrapper'
+    end
+
     attr_reader :url
-
-    class << self
-      attr_reader :url
-    end
-
-    def self.get_theme(url)
-      @url = url
-      new url
-    end
 
     def initialize(url, options = {})
       @url, @options = url, options

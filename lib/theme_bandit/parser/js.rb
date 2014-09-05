@@ -1,6 +1,6 @@
 module ThemeBandit
   module JsParser
-    include ThemeBandit::Utils
+    include ThemeBandit::URLFormatter
 
     def get_js_files
       script_tag_values

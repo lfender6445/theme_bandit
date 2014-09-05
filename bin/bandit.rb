@@ -6,6 +6,8 @@ require 'pry'
 require 'fileutils'
 require 'theme_bandit'
 
+SUPPORTED_ENGINES = /^(erb|haml|slim)$/
+
 def init
   ThemeBandit.configure do |config|
     config.url             = ask_user_for_domain
@@ -33,7 +35,7 @@ end
 def ask_user_for_language
   puts 'Enter your templating language (erb, haml, slim)'
   answer = gets.chomp
-  raise "We do not support #{answer}" unless match = answer.match(/^(erb|haml|slim)$/)
+  raise "We do not support #{answer}" unless match = answer.match(SUPPORTED_ENGINES)
   match[0]
 end
 

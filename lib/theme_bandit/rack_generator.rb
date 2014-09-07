@@ -1,5 +1,7 @@
 require 'html2slim/command'
 
+require 'html2haml'
+
 module ThemeBandit
   class RackGenerator
 
@@ -43,6 +45,9 @@ module ThemeBandit
         File.open("#{Dir.pwd}/theme/app/views/templates/index.slim", 'w') { |file| file.write(slim_contents) }
       when ('erb' || 'html')
         File.open("#{Dir.pwd}/theme/app/views/templates/index.erb", 'w') { |file| file.write(index_file_contents) }
+      when 'haml'
+        haml_contents = Haml::HTML.new(index_file_contents, {:erb => nil}).render()
+        File.open("#{Dir.pwd}/theme/app/views/templates/index.haml", 'w') { |file| file.write(haml_contents) }
       else
         raise TEMPLATE_ERROR
       end

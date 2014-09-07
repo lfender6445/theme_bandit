@@ -28,8 +28,9 @@ def make_a_directory
 end
 
 def ask_user_for_domain
-  puts 'Enter the URL of the theme you wish to download:'
-  gets.chomp
+  # puts 'Enter the URL of the theme you wish to download:'
+  # gets.chomp
+  'https://www.google.com/'
 end
 
 def ask_user_for_language

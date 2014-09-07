@@ -46,13 +46,14 @@ def ask_user_to_start_rack_app
   if answer == 'y'
     app_message
     puts 'changing directory to ./theme'
-    Dir.chdir 'theme'
-    puts 'running `bundle in new directory`'
-    Bundler.with_clean_env do
-      `bundle install`
+    Dir.chdir 'theme' do
+      Bundler.with_clean_env do
+        puts 'running `bundle in new directory`'
+        `bundle install`
+        puts 'running `bundle exec rackup -p 3000`'
+        system('bundle exec rackup -p 3000')
+      end
     end
-    puts 'bundle exec rackup -p 3000`'
-    system('bundle exec rackup -p 3000')
   else
     app_message
   end

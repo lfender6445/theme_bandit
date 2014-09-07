@@ -6,7 +6,7 @@ require 'pry'
 require 'fileutils'
 require 'theme_bandit'
 
-SUPPORTED_ENGINES = /^(erb|haml|slim)$/
+SUPPORTED_ENGINES = /^(erb|haml|slim|html)$/
 
 def init
   ThemeBandit.configure do |config|

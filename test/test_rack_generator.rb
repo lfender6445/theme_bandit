@@ -42,6 +42,7 @@ describe ThemeBandit::RackGenerator do
     def configure_and_write_files
       ThemeBandit.configure do |config|
         config.template_engine = @engine
+        config.gem_root = Dir.pwd
         config.url = 'http://www.example.com'
       end
       ThemeBandit::DocumentWriter.new(load_html_fixture, @url).write

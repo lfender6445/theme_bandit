@@ -9,10 +9,19 @@ require 'bundler'
 
 SUPPORTED_ENGINES = /^(erb|haml|slim)$/
 
+def get_root
+  begin
+    Gem::Specification.find_by_name('theme_bandit').gem_dir
+  rescue
+    Dir.pwd
+  end
+end
+
 def init
   ThemeBandit.configure do |config|
     config.url             = ask_user_for_domain
     config.template_engine = ask_user_for_language
+    config.gem_root        = get_root
   end
   start_fresh
   document = ThemeBandit::Downloader.get_theme
@@ -47,7 +56,7 @@ end
 def ask_user_for_language
   puts 'Select your favorite template engine (erb, haml, slim)'
   answer = gets.chomp
-  fail "We do not support #{answer}" unless match = answer.match(SUPPORTED_ENGINES)
+  fail "You must select a supported template engine (erb, haml, or slim)" unless match = answer.match(SUPPORTED_ENGINES)
   match[0]
 end
 

@@ -22,6 +22,7 @@ def prep_config
   ThemeBandit.configure do |config|
     config.template_engine = 'erb'
     config.url = 'http://www.example.com'
+    config.gem_root = Dir.pwd
   end
 end
 

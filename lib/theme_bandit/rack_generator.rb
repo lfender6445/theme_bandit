@@ -16,14 +16,14 @@ module ThemeBandit
       generate_view
     end
 
-    def get_recipe
-      "recipes/sinatra/#{ThemeBandit.configuration.template_engine}/."
+    def get_recipe(root = ThemeBandit.configuration.gem_root)
+      "#{root}/lib/theme_bandit/recipes/sinatra/#{ThemeBandit.configuration.template_engine}/."
     end
 
     # NOTE: to copy the innards of a dir, use a /., with a dot at the end
     # example - recipes/sinatra/.
-    def copy_template_to_dir(destination, template_dir = get_recipe)
-      t = "#{Dir.pwd}/lib/theme_bandit/#{template_dir}"
+    def copy_template_to_dir(destination)
+      t = get_recipe
       FileUtils.cp_r t, destination
     end
 
@@ -37,16 +37,16 @@ module ThemeBandit
       contents.gsub("#{Dir.pwd}/theme/public", '')
     end
 
-    def generate_view
+    def generate_view(root = Dir.pwd)
       case ThemeBandit.configuration.template_engine
       when 'slim'
         slim_contents = HTML2Slim.convert!(index_file_contents, :html)
-        File.open("#{Dir.pwd}/theme/app/views/templates/index.slim", 'w') { |file| file.write(slim_contents) }
+        File.open("#{root}/theme/app/views/templates/index.slim", 'w') { |file| file.write(slim_contents) }
       when ('erb' || 'html')
-        File.open("#{Dir.pwd}/theme/app/views/templates/index.erb", 'w') { |file| file.write(index_file_contents) }
+        File.open("#{root}/theme/app/views/templates/index.erb", 'w') { |file| file.write(index_file_contents) }
       when 'haml'
         haml_contents = Haml::HTML.new(index_file_contents, erb: nil).render
-        File.open("#{Dir.pwd}/theme/app/views/templates/index.haml", 'w') { |file| file.write(haml_contents) }
+        File.open("#{root}/theme/app/views/templates/index.haml", 'w') { |file| file.write(haml_contents) }
       else
         fail TEMPLATE_ERROR
       end

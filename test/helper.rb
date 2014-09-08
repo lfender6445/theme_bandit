@@ -8,7 +8,7 @@ require_relative '../lib/theme_bandit'
 MiniTest.autorun
 
 def load_html_fixture
-  @fixture||=File.read(File.open("#{Dir.pwd}/test/fixtures/index.html",'r'))
+  @fixture ||= File.read(File.open("#{Dir.pwd}/test/fixtures/index.html", 'r'))
 end
 
 def stub_request_stack
@@ -36,5 +36,3 @@ def stub_js
   url = 'http://www.example.com/js/script_2.js'
   stub_request(:get, url).to_return(body: '')
 end
-
-

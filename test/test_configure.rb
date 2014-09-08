@@ -1,7 +1,6 @@
 require_relative 'helper'
 
 class TestConfigure < MiniTest::Test
-
   def setup
     @subject = ThemeBandit
   end
@@ -12,5 +11,4 @@ class TestConfigure < MiniTest::Test
     end
     assert_equal @subject.configuration.foo, 'bar'
   end
-
 end

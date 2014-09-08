@@ -1,9 +1,9 @@
-require "bundler/gem_tasks"
+require 'bundler/gem_tasks'
 
 begin
   require 'bundler'
   Bundler::GemHelper.install_tasks
-rescue Exception => e
+rescue => e
 end
 
 require 'rake/testtask'
@@ -14,4 +14,4 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true
 end
 
-task :default => 'test'
+task default: 'test'

@@ -49,13 +49,13 @@ describe ThemeBandit::DocumentWriter do
     describe 'parsers/mixin behavior' do
       describe ThemeBandit::CSSParser do
         it '#get_css_files' do
-          assert_equal(@subject.get_css_files, ["http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/style.css"])
+          assert_equal(@subject.get_css_files, ['http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/style.css'])
         end
       end
 
       describe ThemeBandit::JSParser do
         it '#get_js_files' do
-          assert_equal(@subject.get_js_files, ["http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/0_script.js", "http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/1_script_2.js"])
+          assert_equal(@subject.get_js_files, ['http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/0_script.js', 'http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/1_script_2.js'])
         end
       end
     end

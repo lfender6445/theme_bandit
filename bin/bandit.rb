@@ -30,7 +30,7 @@ def generate_app(document)
 end
 
 def make_a_directory
-  FileUtils::mkdir_p 'theme'
+  FileUtils.mkdir_p 'theme'
 end
 
 def ask_user_for_domain
@@ -42,7 +42,7 @@ end
 def ask_user_for_language
   puts 'Enter your templating language (erb, haml, slim)'
   answer = gets.chomp
-  raise "We do not support #{answer}" unless match = answer.match(SUPPORTED_ENGINES)
+  fail "We do not support #{answer}" unless match = answer.match(SUPPORTED_ENGINES)
   match[0]
 end
 

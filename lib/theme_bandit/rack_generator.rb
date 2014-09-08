@@ -4,7 +4,6 @@ require 'html2haml'
 
 module ThemeBandit
   class RackGenerator
-
     def self.build
       new
     end
@@ -23,13 +22,13 @@ module ThemeBandit
 
     # NOTE: to copy the innards of a dir, use a /., with a dot at the end
     # example - recipes/sinatra/.
-    def copy_template_to_dir(destination, template_dir=get_recipe)
+    def copy_template_to_dir(destination, template_dir = get_recipe)
       t = "#{Dir.pwd}/lib/theme_bandit/#{template_dir}"
       FileUtils.cp_r t, destination
     end
 
     def index_file_contents
-      index_html = File.open("#{Dir.pwd}/theme/public/index.html",'r')
+      index_html = File.open("#{Dir.pwd}/theme/public/index.html", 'r')
       absolute_to_relative(File.read(index_html))
     end
 
@@ -46,12 +45,11 @@ module ThemeBandit
       when ('erb' || 'html')
         File.open("#{Dir.pwd}/theme/app/views/templates/index.erb", 'w') { |file| file.write(index_file_contents) }
       when 'haml'
-        haml_contents = Haml::HTML.new(index_file_contents, {:erb => nil}).render()
+        haml_contents = Haml::HTML.new(index_file_contents, erb: nil).render
         File.open("#{Dir.pwd}/theme/app/views/templates/index.haml", 'w') { |file| file.write(haml_contents) }
       else
-        raise TEMPLATE_ERROR
+        fail TEMPLATE_ERROR
       end
     end
-
   end
 end

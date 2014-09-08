@@ -12,7 +12,7 @@ module ThemeBandit
   class Config
     attr_accessor :data
 
-    def initialize(data={})
+    def initialize(data = {})
       @data = {}
       update!(data)
     end
@@ -41,7 +41,7 @@ module ThemeBandit
 
     def method_missing(sym, *args)
       if sym.to_s =~ /(.+)=$/
-        self[$1] = args.first
+        self[Regexp.last_match[1]] = args.first
       else
         self[sym]
       end

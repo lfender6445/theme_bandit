@@ -2,7 +2,7 @@ require 'helper'
 
 describe ThemeBandit::RackGenerator do
 
-  supported_engines = ['slim', 'haml', 'erb']
+  supported_engines = %w(slim haml erb)
 
   supported_engines.each do |engine|
     describe "#builds a recipe #{engine}" do
@@ -49,5 +49,3 @@ describe ThemeBandit::RackGenerator do
   end
 
 end
-
-

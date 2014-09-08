@@ -4,16 +4,16 @@ module ThemeBandit
   class Downloader
     include HTTParty
 
-    def self.get_theme(url=ThemeBandit.configuration.url)
+    def self.get_theme(url = ThemeBandit.configuration.url)
       url ? fetch(url) : error
     end
 
-    def self.fetch(url, options={})
+    def self.fetch(url, options = {})
       new(url, options).document
     end
 
     def self.error
-      raise 'Invalid configuration, please configure through ./bin wrapper'
+      fail 'Invalid configuration, please configure through ./bin wrapper'
     end
 
     attr_reader :url, :options, :document
@@ -26,6 +26,5 @@ module ThemeBandit
     def get_document(url)
       self.class.get(url, options)
     end
-
   end
 end

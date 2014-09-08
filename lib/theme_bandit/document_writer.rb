@@ -1,6 +1,5 @@
 module ThemeBandit
   class DocumentWriter
-
     include ThemeBandit::CSSParser
     include ThemeBandit::JSParser
     include ThemeBandit::HTMLParser
@@ -8,14 +7,13 @@ module ThemeBandit
     # TODO: font parser
 
     attr_accessor :document
-    attr_reader   :url
+    attr_reader :url
 
     CSS_FOLDER   =  './theme/public/css/'
     JS_FOLDER    =  './theme/public/js/'
     HTML_FOLDER  =  './theme/public/'
 
-
-    def initialize(doc, url=ThemeBandit.configuration.url)
+    def initialize(doc, url = ThemeBandit.configuration.url)
       @document, @url = Nokogiri::HTML(doc), URI.parse(url)
     end
 
@@ -39,12 +37,12 @@ module ThemeBandit
     # end
 
     def make_dir(folder)
-      FileUtils::mkdir_p folder
+      FileUtils.mkdir_p folder
     end
 
     def download_css(files)
       make_dir(CSS_FOLDER)
-      files.each_with_index do |file_name, count|
+      files.each_with_index do |file_name, _count|
         doc = Downloader.fetch(file_name, {})
         new_file = file_name.split('/').last
         File.open("#{CSS_FOLDER}#{new_file}", 'w') { |file| file.write(doc.body) }
@@ -63,6 +61,5 @@ module ThemeBandit
     def write_html_file
       File.open("#{HTML_FOLDER}index.html", 'w') { |file| file.write(html) }
     end
-
   end
 end

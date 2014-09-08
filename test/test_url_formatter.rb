@@ -1,6 +1,5 @@
 require_relative 'helper'
 
-
 describe ThemeBandit::URLFormatter do
 
   include ThemeBandit::URLFormatter

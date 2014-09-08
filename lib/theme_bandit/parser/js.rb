@@ -22,6 +22,5 @@ module ThemeBandit
         end
       end
     end
-
   end
 end

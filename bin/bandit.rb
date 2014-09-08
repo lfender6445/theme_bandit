@@ -14,13 +14,19 @@ def init
     config.template_engine = ask_user_for_language
   end
   start_fresh
-  ThemeBandit::Downloader.get_theme
+  document = ThemeBandit::Downloader.get_theme
+  generate_app(document)
   ask_user_to_start_rack_app
 end
 
 def start_fresh
   `rm -rf theme`
   make_a_directory
+end
+
+def generate_app(document)
+  html = ThemeBandit::DocumentWriter.new(document).revise_html
+
 end
 
 def make_a_directory

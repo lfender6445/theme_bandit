@@ -8,8 +8,7 @@ require_relative 'parser/css'
 require_relative 'parser/js'
 require_relative 'parser/html'
 
-# NOTE: must come after all other parsers
-require_relative 'document_parser'
+require_relative 'document_writer'
 
 require_relative 'rack_generator'
 

@@ -1,5 +1,5 @@
 module ThemeBandit
-  module CssParser
+  module CSSParser
     include ThemeBandit::URLFormatter
 
     def get_css_files

@@ -1,5 +1,5 @@
 module ThemeBandit
-  module JsParser
+  module JSParser
     include ThemeBandit::URLFormatter
 
     def get_js_files

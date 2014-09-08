@@ -1,6 +1,6 @@
 module ThemeBandit
-  module HtmlParser
-    def setup_html
+  module HTMLParser
+    def revise_head_tags
       remove_link_tags
       remove_script_tags
       inject_link_nodes

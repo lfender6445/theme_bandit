@@ -5,24 +5,26 @@ module ThemeBandit
     include HTTParty
 
     def self.get_theme(url=ThemeBandit.configuration.url)
-      new(url || error)
+      url ? fetch(url) : error
+    end
+
+    def self.fetch(url, options={})
+      new(url, options).document
     end
 
     def self.error
       raise 'Invalid configuration, please configure through ./bin wrapper'
     end
 
-    attr_reader :url
+    attr_reader :url, :options, :document
 
     def initialize(url, options = {})
       @url, @options = url, options
-      document = get_document
-      ThemeBandit::DocumentParser.new document
+      @document = get_document(url)
     end
 
-    def get_document
-      doc = self.class.get(url, {})
-      Nokogiri::HTML(doc)
+    def get_document(url)
+      self.class.get(url, options)
     end
 
   end

@@ -1,10 +1,11 @@
-#!/usr/bin/env ruby_executable_hooks
+#!/usr/bin/env ruby
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
-require 'pry'
 require 'fileutils'
 require 'theme_bandit'
+require 'uri'
+require 'bundler'
 
 SUPPORTED_ENGINES = /^(erb|haml|slim|html)$/
 
@@ -34,9 +35,13 @@ def make_a_directory
 end
 
 def ask_user_for_domain
-  # puts 'Enter the URL of the theme you wish to download:'
-  # gets.chomp
-  'https://www.google.com/'
+  puts 'Enter the URL of the theme you wish to download (example: http://www.google.com)'
+  url = gets.chomp
+  if url == ''
+    raise 'Invalid url'
+  else
+    url
+  end
 end
 
 def ask_user_for_language
@@ -54,7 +59,7 @@ def ask_user_to_start_rack_app
     puts 'changing directory to ./theme'
     Dir.chdir 'theme' do
       Bundler.with_clean_env do
-        puts 'running `bundle in new directory`'
+        puts "running bundle in #{Dir.pwd}/theme/"
         `bundle install`
         puts 'running `bundle exec rackup -p 3000`'
         system('bundle exec rackup -p 3000')
@@ -62,12 +67,12 @@ def ask_user_to_start_rack_app
     end
   else
     app_message
+    puts "Don't forget to bundle before starting!"
   end
 end
 
 def app_message
   puts "Your rack app can be found at #{Dir.pwd}/theme."
-  puts "Don't forget to bundle before starting!"
 end
 
 begin

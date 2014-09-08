@@ -17,11 +17,6 @@ describe ThemeBandit::Downloader do
       lambda { @subject.get_theme }.must_raise RuntimeError
     end
 
-    # it 'requires template configuration' do
-    #   ThemeBandit.configure { |config| config.template_engine = nil }
-    #   lambda { @subject.get_theme @url }.must_raise RuntimeError
-    # end
-
     describe 'attributes' do
       before do
         @instance = @subject.new(@url)

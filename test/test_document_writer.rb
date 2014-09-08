@@ -2,24 +2,9 @@ require 'helper'
 
 describe ThemeBandit::DocumentWriter do
 
-  def stub_css
-    url = 'http://www.example.com/css/style.css'
-    stub_request(:get, url).to_return(body: '')
-  end
-
-  def stub_js
-    url = 'http://www.example.com/js/script.js'
-    stub_request(:get, url).to_return(body: '')
-    url = 'http://www.example.com/js/script_2.js'
-    stub_request(:get, url).to_return(body: '')
-  end
-
   before do
-    ThemeBandit.configure { |config| config.template_engine = 'erb' }
-    @url = 'http://www.example.com'
-    stub_request(:get, @url).to_return(body: load_html_fixture)
-    stub_css
-    stub_js
+    stub_request_stack
+    prep_config
     @subject = ThemeBandit::DocumentWriter.new(load_html_fixture, @url)
   end
 
@@ -37,34 +22,43 @@ describe ThemeBandit::DocumentWriter do
     end
   end
 
-  # Mixin Behavior
-  describe 'parsers' do
+  describe '#write' do
+
     before do
-      @subject.revise_html
+      @subject.write
     end
 
-    describe ThemeBandit::CSSParser do
-      it '#get_css_files' do
-        assert_equal(@subject.get_css_files, ["http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/style.css"])
+    describe '#write' do
+      it 'writes index.html' do
+        assert File.file?("#{Dir.pwd}/theme/public/index.html")
+      end
+      it 'writes styles' do
+        assert File.file?("#{Dir.pwd}/theme/public/css/style.css")
+      end
+      describe 'script writers' do
+        # Preserve order of script tags
+        it 'orders and renames script 1' do
+          assert File.file?("#{Dir.pwd}/theme/public/js/0_script.js")
+        end
+        it 'orders and renames script 2' do
+          assert File.file?("#{Dir.pwd}/theme/public/js/1_script_2.js")
+        end
       end
     end
 
-    describe ThemeBandit::JSParser do
-      it '#get_js_files' do
-        assert_equal(@subject.get_js_files, ["http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/0_script.js", "http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/1_script_2.js"])
+    describe 'parsers/mixin behavior' do
+      describe ThemeBandit::CSSParser do
+        it '#get_css_files' do
+          assert_equal(@subject.get_css_files, ["http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/style.css"])
+        end
+      end
+
+      describe ThemeBandit::JSParser do
+        it '#get_js_files' do
+          assert_equal(@subject.get_js_files, ["http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/0_script.js", "http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/1_script_2.js"])
+        end
       end
     end
-  end
-
-  describe '#html_revision' do
-    it 'returns revised html' do
-      diff(load_html_fixture, @subject.revise_html)
-    end
-  end
-
-  describe ThemeBandit::RackGenerator do
-    # NOTE: For now, document parser is the interface through which RackBuilder is exposed
-    # Consider dividing this logic in the future to isolate responsibilities
   end
 
 end

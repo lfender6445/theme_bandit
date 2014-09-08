@@ -19,12 +19,11 @@ module ThemeBandit
       @document, @url = Nokogiri::HTML(doc), URI.parse(url)
     end
 
-    def revise_html
+    def write
       write_html_revision
-      write_html_file
     end
 
-    def html_revision
+    def html
       document.to_html
     end
 
@@ -62,7 +61,7 @@ module ThemeBandit
     end
 
     def write_html_file
-      File.open("#{HTML_FOLDER}index.html", 'w') { |file| file.write(html_revision) }
+      File.open("#{HTML_FOLDER}index.html", 'w') { |file| file.write(html) }
     end
 
   end

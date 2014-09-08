@@ -25,8 +25,8 @@ def start_fresh
 end
 
 def generate_app(document)
-  html = ThemeBandit::DocumentWriter.new(document).revise_html
-
+  ThemeBandit::DocumentWriter.new(document).write
+  ThemeBandit::RackGenerator.build
 end
 
 def make_a_directory

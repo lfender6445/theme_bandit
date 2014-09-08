@@ -17,7 +17,8 @@ module ThemeBandit
     end
 
     def get_recipe(root = ThemeBandit.configuration.gem_root)
-      "#{root}/lib/theme_bandit/recipes/sinatra/#{ThemeBandit.configuration.template_engine}/."
+      src = "#{root}/lib/theme_bandit/recipes/sinatra/#{ThemeBandit.configuration.template_engine}/"
+      Dir.glob("#{src}/**/*")
     end
 
     # NOTE: to copy the innards of a dir, use a /., with a dot at the end

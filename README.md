@@ -1,9 +1,10 @@
 # ThemeBandit
 
-Convert any site template (Wordpress, Joomla, etc) into a rack
-application.
+Enjoy rapid prototyping with theme bandit :heart:
 
-`./bin/bandit`
+Convert any site template (Wordpress, Joomla, HTML) into a small and
+simple sinatra rack application.
+
 
 ## Installation
 
@@ -20,8 +21,26 @@ Or install it yourself as:
     $ gem install theme_bandit
 
 ## Usage
-`./bin/bandit`
+`./bin/bandit/` -> Builds a rack application in the `theme` directory of
+your project root.
 
+## Caveats
+Not all templating languages play nicely with html. If you run into
+templating issues, `erb` will be your safest bet because it renders as
+pure html.
+
+## TODO
+
+- Support for binaries (images + fonts + embeds)
+- Support for multiple pages
+- HTML Sanitization
+- HTML Formatting
+
+## Tests
+
+```
+rake test
+```
 ## Contributing
 
 1. Fork it

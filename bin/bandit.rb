@@ -7,7 +7,7 @@ require 'theme_bandit'
 require 'uri'
 require 'bundler'
 
-SUPPORTED_ENGINES = /^(erb|haml|slim|html)$/
+SUPPORTED_ENGINES = /^(erb|haml|slim)$/
 
 def init
   ThemeBandit.configure do |config|
@@ -45,7 +45,7 @@ def ask_user_for_domain
 end
 
 def ask_user_for_language
-  puts 'Enter your templating language (erb, haml, slim)'
+  puts 'Select your favorite template engine (erb, haml, slim)'
   answer = gets.chomp
   fail "We do not support #{answer}" unless match = answer.match(SUPPORTED_ENGINES)
   match[0]
@@ -59,7 +59,7 @@ def ask_user_to_start_rack_app
     puts 'changing directory to ./theme'
     Dir.chdir 'theme' do
       Bundler.with_clean_env do
-        puts "running bundle in #{Dir.pwd}/theme/"
+        puts "running bundle in #{Dir.pwd}/"
         `bundle install`
         puts 'running `bundle exec rackup -p 3000`'
         system('bundle exec rackup -p 3000')
@@ -72,7 +72,7 @@ def ask_user_to_start_rack_app
 end
 
 def app_message
-  puts "Your rack app can be found at #{Dir.pwd}/theme."
+  puts "Your rack app can be found at #{Dir.pwd}/theme/"
 end
 
 begin

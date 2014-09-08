@@ -2,7 +2,7 @@
 
 Enjoy rapid prototyping with theme bandit :heart:
 
-Wordpress themes are beautiful! Now you can easily convert your favorite wordpress themes to a small ruby app.
+Wordpress themes are beautiful! Now you can easily convert your favorite wordpress theme to a small ruby app.
 
 This gem converts any site template (Wordpress, Joomla, HTML) into a small and
 simple sinatra rack application, handling all of the JS and CSS for you.

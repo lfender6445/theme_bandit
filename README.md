@@ -5,6 +5,10 @@ Enjoy rapid prototyping with theme bandit :heart:
 Convert any site template (Wordpress, Joomla, HTML) into a small and
 simple sinatra rack application.
 
+`bandit`
+- Select a url to download
+- Select a templating engine (erb, haml, slim)
+- Start your rack app!
 
 ## Installation
 
@@ -25,12 +29,11 @@ Or install it yourself as:
 your project root.
 
 ## Caveats
-Not all templating languages play nicely with html. If you run into
+Not all templating engines play nicely with html. If you run into
 templating issues, `erb` will be your safest bet because it renders as
 pure html.
 
 ## TODO
-
 - Support for binaries (images + fonts + embeds)
 - Support for multiple pages
 - HTML Sanitization

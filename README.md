@@ -5,7 +5,7 @@ Enjoy rapid prototyping with theme bandit :heart:
 Convert any site template (Wordpress, Joomla, HTML) into a small and
 simple sinatra rack application.
 
-`bandit`
+Usage from the command line: `bandit`
 - Select a url to download
 - Select a templating engine (erb, haml, slim)
 - Start your rack app!
@@ -25,7 +25,7 @@ Or install it yourself as:
     $ gem install theme_bandit
 
 ## Usage
-`./bin/bandit/` -> Builds a rack application in the `theme` directory of
+`bandit` -> Builds a rack application in the `theme` directory of
 your project root.
 
 ## Caveats

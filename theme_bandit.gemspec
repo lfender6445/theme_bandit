@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Luke Fender']
   spec.summary       = 'Convert any site to a simple rack app'
   spec.description   = 'Convert any site to a simple rack app'
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/lfender6445/theme_bandit'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")

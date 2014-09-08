@@ -2,8 +2,10 @@
 
 Enjoy rapid prototyping with theme bandit :heart:
 
-Convert any site template (Wordpress, Joomla, HTML) into a small and
-simple sinatra rack application.
+Wordpress themes are beautiful! Now you can easily convert your favorite wordpress themes to a small ruby app.
+
+This gem converts any site template (Wordpress, Joomla, HTML) into a small and
+simple sinatra rack application, handling all of the JS and CSS for you.
 
 Usage from the command line: `bandit`
 - Select a url to download

@@ -32,20 +32,16 @@ module ThemeBandit
       write_html_file
     end
 
-    # def build_rack_app
-    #   ThemeBandit::RackGenerator.build
-    # end
-
     def make_dir(folder)
       FileUtils.mkdir_p folder
     end
 
     def download_css(files)
       make_dir(CSS_FOLDER)
-      files.each_with_index do |file_name, _count|
+      files.each_with_index do |file_name, order|
         doc = Downloader.fetch(file_name, {})
         new_file = file_name.split('/').last
-        File.open("#{CSS_FOLDER}#{new_file}", 'w') { |file| file.write(doc.body) }
+        File.open("#{CSS_FOLDER}#{order}_#{new_file}", 'w') { |file| file.write(doc.body) }
       end
     end
 

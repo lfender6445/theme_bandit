@@ -35,11 +35,14 @@ Not all templating engines play nicely with html. If you run into
 templating issues, `erb` will be your safest bet because it renders as
 pure html.
 
-## TODO
+## TODO / Coming Soon
+- Replace & fetch @import declarations in CSS
+- Fetch ajax resources
+- HTML Sanitization
 - Support for binaries (images + fonts + embeds)
 - Support for multiple pages
-- HTML Sanitization
 - HTML Formatting
+- Verfiy inline tags
 
 ## Tests
 

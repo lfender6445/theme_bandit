@@ -1,10 +1,15 @@
 module ThemeBandit
   module HTMLParser
     def revise_head_tags
+      remove_base_tags
       remove_link_tags
       remove_script_tags
       inject_link_nodes
       inject_script_nodes
+    end
+
+    def remove_base_tags
+      document.search('base').remove
     end
 
     def remove_link_tags

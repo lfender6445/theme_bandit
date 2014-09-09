@@ -33,7 +33,7 @@ describe ThemeBandit::DocumentWriter do
         assert File.file?("#{Dir.pwd}/theme/public/index.html")
       end
       it 'writes styles' do
-        assert File.file?("#{Dir.pwd}/theme/public/css/style.css")
+        assert File.file?("#{Dir.pwd}/theme/public/css/0_style.css")
       end
       describe 'script writers' do
         # Preserve order of script tags
@@ -49,7 +49,7 @@ describe ThemeBandit::DocumentWriter do
     describe 'parsers/mixin behavior' do
       describe ThemeBandit::CSSParser do
         it '#get_css_files' do
-          assert_equal(@subject.get_css_files, ['http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/style.css'])
+          assert_equal(@subject.get_css_files, ['http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/0_style.css'])
         end
       end
 

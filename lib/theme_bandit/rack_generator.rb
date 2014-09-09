@@ -33,7 +33,7 @@ module ThemeBandit
       absolute_to_relative(File.read(index_html))
     end
 
-    # Convert all links in html document to relative for ruby app
+
     def absolute_to_relative(contents)
       contents.gsub("#{Dir.pwd}/theme/public", '')
     end

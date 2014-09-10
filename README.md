@@ -35,6 +35,10 @@ Not all templating engines play nicely with html. If you run into
 templating issues, `erb` will be your safest bet because it renders as
 pure html.
 
+Example: The gem converts html for page A to slim, erb, or haml.
+Sometimes the html for page A is messy and in turn produces bad slim,
+which can cause the application to blow up until corrected.
+
 ## TODO / Coming Soon
 - Replace & fetch @import declarations in CSS
 - Fetch ajax resources

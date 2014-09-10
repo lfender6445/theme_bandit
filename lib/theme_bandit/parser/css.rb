@@ -32,11 +32,6 @@ module ThemeBandit
     end
 
     def get_import_urls(file, file_name)
-      # collect list of resolvable import urls
-      # remove import rules in files
-      # recursively download_css imports if there has been a collection
-      # "http://livedemo00.template-help.com/wordpress_51146/wp-content/themes/theme51146/main-style.css"
-      # http://livedemo00.template-help.com/wordpress_51146/wp-content/themes/CherryFramework/style.css
       imports = file.scan(RE_IMPORT).map { |import| import.first }.select {|import| import[/\.css/] }
       imports_arr = []
       imports.each do |import|
@@ -46,13 +41,13 @@ module ThemeBandit
           matcher   = file_uri.path.split('/').last(dot_dots_length + 1).join('/')
           destination = import.split('/').last(2).join('/')
           dest_file = file_name.gsub(matcher, destination)
-          imports_arr << dest_file
+          imports_arr << { destination: dest_file, matcher: import, rule: file.match(RE_IMPORT)[0] }
         else
           file_uri  = URI.parse(file_name)
           matcher   = file_uri.path.split('/').last
           destination = import
           dest_file = file_name.gsub(matcher, destination)
-          imports_arr << dest_file
+          imports_arr << { destination: dest_file, matcher: import, rule: file.match(RE_IMPORT)[0] }
         end
       end
       imports_arr.length > 0 ? imports_arr : nil

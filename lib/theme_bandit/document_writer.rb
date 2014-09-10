@@ -27,6 +27,8 @@ module ThemeBandit
     end
 
     def write_html_revision
+      make_dir(CSS_FOLDER)
+      make_dir(JS_FOLDER)
       download_css(get_css_files)
       download_js(get_js_files)
       revise_head_tags
@@ -37,29 +39,54 @@ module ThemeBandit
       FileUtils.mkdir_p folder
     end
 
-    def download_css(files)
-      make_dir(CSS_FOLDER)
-      files.each_with_index do |file, order|
-        download_single_css_file(file, order)
+    def download_css(files, these_are_import_files=false)
+      if these_are_import_files
+        files.each_with_index do |file, order|
+          download_and_replace_import_in_css_file(file, order)
+        end
+      else
+        files.each_with_index do |file, order|
+          download_single_css_file(file, order)
+        end
+      end
+    end
+
+    def download_and_replace_import_in_css_file(file, order)
+      destination = file[:destination]
+      rule = file[:rule]
+      doc = Downloader.fetch(destination, {}).body
+      new_doc = @doc_with_imports.gsub(rule, doc)
+      new_file_name = destination.split('/').last
+      File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |f| f.write(new_doc) }
+      download_css_imports(new_doc, destination) do |imports|
+        download_css(imports, true) if imports
       end
     end
 
     def download_single_css_file(file_name, order)
       doc = Downloader.fetch(file_name, {}).body
-      download_css_imports(doc, file_name)
-      new_file_name = file_name.split('/').last
-      File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |file| file.write(doc) }
+      download_css_imports(doc, file_name) do |imports|
+        if imports
+          p "#{file_name} has imports"
+          download_css(imports, true)
+        else
+          new_file_name = file_name.split('/').last
+          File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |file| file.write(doc) }
+        end
+      end
     end
 
     # Use recurison to get to deepest level
     def download_css_imports(doc, file_name)
       if imports = get_import_urls(doc, file_name)
-        download_css(imports)
+        @doc_with_imports = doc
+        yield imports
+      else
+        yield false
       end
     end
 
     def download_js(files)
-      make_dir(JS_FOLDER)
       files.each_with_index do |file_name, order|
         doc = Downloader.fetch(file_name, {})
         new_file = file_name.split('/').last

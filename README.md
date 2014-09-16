@@ -25,7 +25,7 @@ Or install it yourself as:
     $ gem install theme_bandit
 
 ## Usage
-`./bin/bandit/` -> Builds a rack application in the `theme` directory of
+`./bin/bandit` -> Builds a rack application in the `theme` directory of
 your project root.
 
 ## Caveats

@@ -26,5 +26,5 @@ test/version_tmp
 mkmf.log
 .bundle
 coverage
-.swp
-.dump
+*.swp
+*.dump

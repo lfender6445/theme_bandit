@@ -3,9 +3,9 @@ require 'helper'
 describe ThemeBandit::DocumentWriter do
 
   before do
-    stub_request_stack
     prep_config
-    @subject = ThemeBandit::DocumentWriter.new(load_html_fixture, @url)
+    stub_request_stack
+    @subject = ThemeBandit::DocumentWriter.new(load_html_fixture, test_url)
   end
 
   after do
@@ -46,7 +46,7 @@ describe ThemeBandit::DocumentWriter do
       end
     end
 
-    describe 'parsers/mixin behavior' do
+    describe 'parser mixin behavior' do
       describe ThemeBandit::CSSParser do
         it '#get_css_files' do
           assert_equal(@subject.get_css_files, ['http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/0_style.css'])

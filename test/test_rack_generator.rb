@@ -5,10 +5,9 @@ describe ThemeBandit::RackGenerator do
   supported_engines = %w(slim haml erb)
 
   supported_engines.each do |engine|
-    describe "#builds a recipe #{engine}" do
+    describe "#builds #{engine} recipe" do
 
       before do
-        stub_request_stack
         @engine = engine
         configure_and_write_files
         ThemeBandit::RackGenerator.build
@@ -26,13 +25,13 @@ describe ThemeBandit::RackGenerator do
         assert File.file?("#{Dir.pwd}/theme/config.ru")
       end
 
-      it 'config.ru' do
+      it 'application.rb' do
         assert File.file?("#{Dir.pwd}/theme/app/application.rb")
       end
 
       describe 'app/views/templates' do
-        it "build .#{@engine} file" do
-          assert File.file?("#{Dir.pwd}/theme/app/views/templates/index.#{@engine}")
+        it "build .#{engine} file" do
+          assert File.file?("#{Dir.pwd}/theme/app/views/templates/index.#{engine}")
         end
       end
     end
@@ -40,12 +39,14 @@ describe ThemeBandit::RackGenerator do
     private
 
     def configure_and_write_files
+      prep_config
       ThemeBandit.configure do |config|
         config.template_engine = @engine
+        config.url = test_url
         config.gem_root = Dir.pwd
-        config.url = 'http://www.example.com'
       end
-      ThemeBandit::DocumentWriter.new(load_html_fixture, @url).write
+      stub_request_stack
+      ThemeBandit::DocumentWriter.new(load_html_fixture, ThemeBandit.configuration.url).write
     end
   end
 

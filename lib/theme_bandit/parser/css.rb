@@ -1,9 +1,5 @@
-require 'css_parser'
-
 module ThemeBandit
-  # Consider Renaming?
   module CSSParser
-    include CssParser
 
     include ThemeBandit::URLFormatter
 

@@ -1,4 +1,3 @@
-require 'pry'
 module ThemeBandit
   class DocumentWriter
     include ThemeBandit::CSSParser
@@ -67,7 +66,6 @@ module ThemeBandit
       doc = Downloader.fetch(file_name, {}).body
       download_css_imports(doc, file_name) do |imports|
         if imports
-          p "#{file_name} has imports"
           download_css(imports, true)
         else
           new_file_name = file_name.split('/').last

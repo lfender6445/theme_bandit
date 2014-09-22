@@ -1,5 +1,5 @@
-require 'rubygems'
 require 'pry'
+require 'rubygems'
 require 'minitest/autorun'
 require 'webmock/minitest'
 
@@ -9,6 +9,14 @@ MiniTest.autorun
 
 def load_html_fixture
   @fixture ||= File.read(File.open("#{Dir.pwd}/test/fixtures/index.html", 'r'))
+end
+
+def load_css_fixture
+  File.read(File.open("#{Dir.pwd}/test/fixtures/css/style.css", 'r'))
+end
+
+def load_import_fixture
+  File.read(File.open("#{Dir.pwd}/test/fixtures/css/import.css", 'r'))
 end
 
 def test_url
@@ -30,8 +38,14 @@ def prep_config
 end
 
 def stub_css
+  # stub_import_css
   url = 'http://www.example.com/css/style.css'
-  stub_request(:any, url).to_return(body: 'hello')
+  stub_request(:any, url).to_return(body: load_css_fixture)
+end
+
+def stub_import_css
+  url = 'http://www.example.com/css/import.css'
+  stub_request(:any, url).to_return(body: load_import_fixture)
 end
 
 def stub_js

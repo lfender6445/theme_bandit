@@ -12,7 +12,7 @@ SUPPORTED_ENGINES = /^(erb|haml|slim)$/
 def get_root
   begin
     Gem::Specification.find_by_name('theme_bandit').gem_dir
-  rescue
+  rescue Gem::LoadError
     Dir.pwd
   end
 end

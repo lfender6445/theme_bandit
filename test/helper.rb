@@ -16,7 +16,7 @@ def load_css_fixture
 end
 
 def load_import_fixture
-  File.read(File.open("#{Dir.pwd}/test/fixtures/css/import.css", 'r'))
+  File.read(File.open("#{Dir.pwd}/test/fixtures/css/style_with_import.css", 'r'))
 end
 
 def test_url
@@ -38,7 +38,7 @@ def prep_config
 end
 
 def stub_css
-  # stub_import_css
+  stub_import_css
   url = 'http://www.example.com/css/style.css'
   stub_request(:any, url).to_return(body: load_css_fixture)
 end

@@ -35,6 +35,7 @@ describe ThemeBandit::DocumentWriter do
       it 'writes styles' do
         assert File.file?("#{Dir.pwd}/theme/public/css/0_style.css")
       end
+
       describe 'script writers' do
         # Preserve order of script tags
         it 'orders and renames script 1' do
@@ -44,18 +45,30 @@ describe ThemeBandit::DocumentWriter do
           assert File.file?("#{Dir.pwd}/theme/public/js/1_script_2.js")
         end
       end
+
     end
 
     describe 'parser mixin behavior' do
+
       describe ThemeBandit::CSSParser do
         it '#get_css_files' do
-          assert_equal(@subject.get_css_files, ['http://www.example.com/Users/lfender/source/theme_bandit/theme/public/css/0_style.css'])
+          assert_equal(@subject.get_css_files, ["http://www.example.com#{Dir.pwd}/theme/public/css/0_style.css"])
+        end
+
+        describe '#get_import_urls' do
+          it 'returns false if none found' do
+            assert_equal(@subject.get_import_urls(load_css_fixture, 'import.css'), nil )
+          end
+          it 'returns import urls' do
+            expected = [{:destination=>"import.css", :rule=>"@import url('import.css');"}]
+            assert_equal(@subject.get_import_urls(load_import_fixture, 'style_with_import.css'), expected)
+          end
         end
       end
 
       describe ThemeBandit::JSParser do
         it '#get_js_files' do
-          assert_equal(@subject.get_js_files, ['http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/0_script.js', 'http://www.example.com/Users/lfender/source/theme_bandit/theme/public/js/1_script_2.js'])
+          assert_equal(@subject.get_js_files, ["http://www.example.com#{Dir.pwd}/theme/public/js/0_script.js", "http://www.example.com#{Dir.pwd}/theme/public/js/1_script_2.js"])
         end
       end
     end

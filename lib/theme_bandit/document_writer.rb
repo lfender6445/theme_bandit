@@ -21,9 +21,7 @@ module ThemeBandit
       write_html_revision
     end
 
-    def html
-      document.to_html
-    end
+    private
 
     def write_html_revision
       make_dir(CSS_FOLDER)
@@ -34,17 +32,20 @@ module ThemeBandit
       write_html_file
     end
 
+
+    def html
+      document.to_html
+    end
+
     def make_dir(folder)
       FileUtils.mkdir_p folder
     end
 
     def download_css(files, these_are_import_files=false)
-      if these_are_import_files
-        files.each_with_index do |file, order|
+      files.each_with_index do |file, order|
+        if these_are_import_files
           download_and_replace_import_in_css_file(file, order)
-        end
-      else
-        files.each_with_index do |file, order|
+        else
           download_single_css_file(file, order)
         end
       end
@@ -55,7 +56,7 @@ module ThemeBandit
       rule = file[:rule]
       doc = Downloader.fetch(destination, {}).body
       new_doc = @doc_with_imports.gsub(rule, doc)
-      new_file_name = destination.split('/').last
+      new_file_name = @file_with_imports.split('/').last
       File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |f| f.write(new_doc) }
       download_css_imports(new_doc, destination) do |imports|
         download_css(imports, true) if imports
@@ -77,7 +78,8 @@ module ThemeBandit
     # Use recurison to get to deepest level
     def download_css_imports(doc, file_name)
       if imports = get_import_urls(doc, file_name)
-        @doc_with_imports = doc
+        @doc_with_imports  = doc
+        @file_with_imports = file_name
         yield imports
       else
         yield false

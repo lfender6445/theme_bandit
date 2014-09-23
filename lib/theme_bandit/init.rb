@@ -7,6 +7,7 @@ require_relative 'url_formatter'
 require_relative 'parser/css'
 require_relative 'parser/js'
 require_relative 'parser/html'
+require_relative 'parser/image'
 
 require_relative 'document_writer'
 

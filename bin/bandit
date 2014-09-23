@@ -19,8 +19,8 @@ end
 
 def init
   ThemeBandit.configure do |config|
-    config.url             = ask_user_for_domain
-    config.template_engine = ask_user_for_language
+    config.url             = 'http://imgur.com/'
+    config.template_engine = 'erb'
     config.gem_root        = get_root
   end
   start_fresh

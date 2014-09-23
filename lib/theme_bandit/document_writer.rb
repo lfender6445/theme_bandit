@@ -1,8 +1,10 @@
+require 'pry'
 module ThemeBandit
   class DocumentWriter
     include ThemeBandit::CSSParser
     include ThemeBandit::JSParser
     include ThemeBandit::HTMLParser
+    include ThemeBandit::ImageParser
     # TODO: image parser
     # TODO: font parser
 
@@ -11,6 +13,7 @@ module ThemeBandit
 
     CSS_FOLDER   =  './theme/public/css/'
     JS_FOLDER    =  './theme/public/js/'
+    IMAGE_FOLDER =  './theme/public/images/'
     HTML_FOLDER  =  './theme/public/'
 
     def initialize(doc, url = ThemeBandit.configuration.url)
@@ -26,8 +29,12 @@ module ThemeBandit
     def write_html_revision
       make_dir(CSS_FOLDER)
       make_dir(JS_FOLDER)
+      make_dir(IMAGE_FOLDER)
+
       download_css(get_css_files)
       download_js(get_js_files)
+      download_images(get_image_files)
+
       revise_head_tags
       write_html_file
     end
@@ -39,6 +46,18 @@ module ThemeBandit
 
     def make_dir(folder)
       FileUtils.mkdir_p folder
+    end
+
+    def download_images(files)
+      files.each do |file|
+        download_single_image(file)
+      end
+    end
+
+    def download_single_image(file_name)
+      img = Downloader.fetch(file_name, {}).parsed_response
+      new_file_name = file_name.split('/').last
+      File.open("#{IMAGE_FOLDER}#{new_file_name}", 'w') { |f| f.write(img) }
     end
 
     def download_css(files, these_are_import_files=false)

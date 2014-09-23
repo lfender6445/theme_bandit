@@ -43,7 +43,7 @@ Sometimes the html for page A is messy and in turn produces bad slim,
 which can cause the application to blow up until corrected.
 
 ## TODO / Coming Soon
-- ~~~Replace & fetch @import declarations in CSS~~~ added in v0.0.5
+- _Replace & fetch @import declarations in CSS_ added in v0.0.5
 - Support for binaries (images + fonts + embeds)
 - Fetch ajax resources
 - HTML Sanitization

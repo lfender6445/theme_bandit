@@ -32,7 +32,9 @@ describe ThemeBandit::DocumentWriter do
       it 'writes index.html' do
         assert File.file?("#{Dir.pwd}/theme/public/index.html")
       end
+
       it 'writes styles' do
+
         assert File.file?("#{Dir.pwd}/theme/public/css/0_style.css")
       end
 
@@ -46,13 +48,21 @@ describe ThemeBandit::DocumentWriter do
         end
       end
 
+      describe 'import output' do
+        it 'merges css files' do
+          contents = File.read(File.open("#{Dir.pwd}/theme/public/css/0_style_with_import.css", 'r'))
+          expected = "h1 {color:blue;}\n\nbody {color:red}\n"
+          assert_equal contents, expected
+        end
+      end
+
     end
 
     describe 'parser mixin behavior' do
 
       describe ThemeBandit::CSSParser do
         it '#get_css_files' do
-          assert_equal(@subject.get_css_files, ["http://www.example.com#{Dir.pwd}/theme/public/css/0_style.css"])
+          assert_equal(@subject.get_css_files, ["http://www.example.com#{Dir.pwd}/theme/public/css/0_style.css", "http://www.example.com#{Dir.pwd}/theme/public/css/0_style_with_import.css" ])
         end
 
         describe '#get_import_urls' do
@@ -61,7 +71,7 @@ describe ThemeBandit::DocumentWriter do
           end
           it 'returns import urls' do
             expected = [{:destination=>"import.css", :rule=>"@import url('import.css');"}]
-            assert_equal(@subject.get_import_urls(load_import_fixture, 'style_with_import.css'), expected)
+            assert_equal(@subject.get_import_urls(load_style_with_import_fixture, 'style_with_import.css'), expected)
           end
         end
       end

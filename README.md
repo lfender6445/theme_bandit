@@ -4,8 +4,8 @@ Enjoy rapid prototyping with theme bandit :heart:
 
 Wordpress themes are beautiful - now you can easily convert your favorite themes to a small ruby app
 
-This gem converts any site template (Wordpress, Joomla, HTML) into
-simple sinatra rack application, resolving both javascript and css.
+This gem converts any site template (Wordpress, Joomla, HTML) into a
+simple [sinatra](http://www.sinatrarb.com/) rack application.
 
 Usage from the command line: `bandit`
 
@@ -14,6 +14,25 @@ Usage from the command line: `bandit`
 - Start your rack app!
 
 You wouldn't download a website ... would you?!
+
+## CLI usage
+`bandit` -> Builds a rack application in a `theme` directory of
+your current working directory.
+
+## TODO / Coming Soon
+- Support inline script + style tags
+- Support for binaries (images + fonts + embeds)
+- Fetch asynchronous resources
+- Support for multiple pages
+
+## template issues
+Not all templating engines play nicely with html. If you run into
+templating issues, `erb` will be your safest bet because it renders as
+pure html.
+
+Example: The gem converts html for page A to slim, erb, or haml.
+If the html for page A is messy, it will produce bad slim
+and cause the application to blow up until adjusted.
 
 ## installation
 
@@ -29,31 +48,13 @@ Or install it yourself as:
 
     $ gem install theme_bandit
 
-## CLI usage
-`bandit` -> Builds a rack application in a `theme` directory of
-your current working directory.
 
-## TODO / Coming Soon
-- Support inline script + style tags
-- Support for binaries (images + fonts + embeds)
-- Fetch asynchronous resources
-- Support for multiple pages
-
-## Caveats
-Not all templating engines play nicely with html. If you run into
-templating issues, `erb` will be your safest bet because it renders as
-pure html.
-
-Example: The gem converts html for page A to slim, erb, or haml.
-Sometimes the html for page A is messy and in turn produces bad slim,
-which can cause the application to blow up until corrected.
-
-## Tests
+## tests
 
 ```
-rake test
+bundle exec rake test
 ```
-## Contributing
+## contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)

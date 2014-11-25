@@ -24,7 +24,11 @@ module ThemeBandit
     end
 
     def get_document(url)
-      self.class.get(url, options)
+      begin
+        self.class.get(url, options)
+      rescue => e
+        p "request failed for #{url} #{e}"
+      end
     end
   end
 end

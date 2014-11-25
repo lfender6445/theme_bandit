@@ -18,7 +18,9 @@ module ThemeBandit
         if src.absolute?
           strip_query_string src.to_s
         else
-          strip_query_string "#{url.scheme}://#{url.host}#{src}"
+          new_src = strip_query_string(src.to_s)
+          absolute = resolve_dot_dots "#{@url.host}#{@url.path}", new_src
+          "#{url.scheme}://#{absolute}"
         end
       end
     end

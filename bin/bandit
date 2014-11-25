@@ -45,7 +45,7 @@ end
 
 def ask_user_for_domain
   puts 'Enter the URL of the theme you wish to download (example: http://www.google.com)'
-  url = gets.chomp
+  url = $stdin.gets.chomp
   if url == ''
     raise 'Invalid url'
   else
@@ -55,14 +55,17 @@ end
 
 def ask_user_for_language
   puts 'Select your favorite template engine (erb, haml, slim)'
-  answer = gets.chomp
-  fail "You must select a supported template engine (erb, haml, or slim)" unless match = answer.match(SUPPORTED_ENGINES)
+  answer = $stdin.gets.chomp
+  answer = 'erb' if answer == ''
+  unless match = answer.match(SUPPORTED_ENGINES)
+    fail "You must select a supported template engine (erb, haml, or slim)"
+  end
   match[0]
 end
 
 def ask_user_to_start_rack_app
   puts 'Do you want to start your new rack app? y/n'
-  answer = gets.chomp
+  answer = $stdin.gets.chomp
   if answer == 'y'
     app_message
     puts 'changing directory to ./theme'

@@ -1,4 +1,4 @@
-# ThemeBandit
+# theme_bandit
 
 Enjoy rapid prototyping with theme bandit :heart:
 
@@ -15,11 +15,11 @@ Usage from the command line: `bandit`
 
 You wouldn't download a website ... would you?!
 
-## Installation
+## installation
 
 Add this line to your application's Gemfile:
 
-    gem 'theme_bandit', '~> 0.0.5'
+    gem 'theme_bandit', '~> 0.0.6'
 
 And then execute:
 
@@ -29,9 +29,15 @@ Or install it yourself as:
 
     $ gem install theme_bandit
 
-## Usage
-`bandit` -> Builds a rack application in the `theme` directory of
-your project root.
+## CLI usage
+`bandit` -> Builds a rack application in a `theme` directory of
+your current working directory.
+
+## TODO / Coming Soon
+- Support inline script + style tags
+- Support for binaries (images + fonts + embeds)
+- Fetch asynchronous resources
+- Support for multiple pages
 
 ## Caveats
 Not all templating engines play nicely with html. If you run into
@@ -41,15 +47,6 @@ pure html.
 Example: The gem converts html for page A to slim, erb, or haml.
 Sometimes the html for page A is messy and in turn produces bad slim,
 which can cause the application to blow up until corrected.
-
-## TODO / Coming Soon
-- _Replace & fetch @import declarations in CSS_ added in v0.0.5
-- Support for binaries (images + fonts + embeds)
-- Fetch ajax resources
-- HTML Sanitization
-- Support for multiple pages
-- HTML Formatting
-- Verfiy inline tags
 
 ## Tests
 

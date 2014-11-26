@@ -34,7 +34,6 @@ describe ThemeBandit::DocumentWriter do
       end
 
       it 'writes styles' do
-
         assert File.file?("#{Dir.pwd}/theme/public/css/0_style.css")
       end
 
@@ -46,6 +45,10 @@ describe ThemeBandit::DocumentWriter do
         it 'orders and renames script 2' do
           assert File.file?("#{Dir.pwd}/theme/public/js/1_script_2.js")
         end
+      end
+
+      it 'preserves inline scripts' do
+        assert @subject.document.search('script')[2]
       end
 
       describe 'import output' do

@@ -20,7 +20,6 @@ You wouldn't download a website ... would you?!
 your current working directory.
 
 ## TODO / Coming Soon
-- Support inline script + style tags
 - Support for binaries (images + fonts + embeds)
 - Fetch asynchronous resources
 - Support for multiple pages

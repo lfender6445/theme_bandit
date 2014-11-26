@@ -14,7 +14,9 @@ module ThemeBandit
 
     def script_tag_values
       script_tags.map do |tag|
-        src = URI.parse(tag.attribute('src'))
+        src = tag.attribute('src').to_s
+        src = cdn_to_fdq(src)
+        src = URI.parse(src)
         if src.absolute?
           strip_query_string src.to_s
         else

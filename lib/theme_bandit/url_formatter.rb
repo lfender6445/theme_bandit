@@ -4,6 +4,10 @@ module ThemeBandit
       str.split('?').first
     end
 
+    def cdn_to_fdq(src)
+      src[/^\/\//] ? "http:#{src}" : src
+    end
+
     # returns an aboslute url with dot dot syntax removed
     def resolve_dot_dots(host, path)
       number_of_dot_dots = path.split('/').select { |v| v == '..' }.length

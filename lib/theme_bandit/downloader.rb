@@ -13,7 +13,7 @@ module ThemeBandit
     end
 
     def self.error
-      fail 'Invalid configuration, please configure through ./bin wrapper'
+      Logger.red 'Invalid configuration, please configure through ./bin wrapper'
     end
 
     attr_reader :url, :options, :document
@@ -25,9 +25,10 @@ module ThemeBandit
 
     def get_document(url)
       begin
+        Logger.green "Downloading #{url}"
         self.class.get(url, options)
       rescue => e
-        p "request failed for #{url} #{e}"
+        Logger.red "request failed for #{url} #{e}"
       end
     end
   end

@@ -1,6 +1,8 @@
 require 'uri'
 require 'nokogiri'
 
+require_relative 'util/logger'
+
 require_relative 'downloader'
 require_relative 'url_formatter'
 

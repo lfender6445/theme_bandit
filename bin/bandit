@@ -46,10 +46,13 @@ end
 def ask_user_for_domain
   puts 'Enter the URL of the theme you wish to download (example: http://www.google.com)'
   url = $stdin.gets.chomp
-  if url == ''
-    raise 'Invalid url'
-  else
-    url
+
+  begin
+    URI.parse(url)
+    return url
+  rescue => e
+    ThemeBandit::Logger.red e
+    exit
   end
 end
 
@@ -58,7 +61,8 @@ def ask_user_for_language
   answer = $stdin.gets.chomp
   answer = 'erb' if answer == ''
   unless match = answer.match(SUPPORTED_ENGINES)
-    fail "You must select a supported template engine (erb, haml, or slim)"
+    ThemeBandit::Logger.red "You must select a supported template engine (erb, haml, or slim)"
+    exit
   end
   match[0]
 end
@@ -68,18 +72,17 @@ def ask_user_to_start_rack_app
   answer = $stdin.gets.chomp
   if answer == 'y'
     app_message
-    puts 'changing directory to ./theme'
     Dir.chdir 'theme' do
       Bundler.with_clean_env do
-        puts "running bundle in #{Dir.pwd}/"
+        ThemeBandit::Logger.green "running `bundle` in #{Dir.pwd}/"
         `bundle install`
-        puts 'running `bundle exec rackup -p 3000`'
+        ThemeBandit::Logger.green 'running `bundle exec rackup -p 3000`'
         system('bundle exec rackup -p 3000')
       end
     end
   else
     app_message
-    puts "Don't forget to bundle before starting!"
+    ThemeBandit::Logger.red "Don't forget to bundle before starting!"
   end
 end
 
@@ -94,3 +97,5 @@ rescue LoadError => e
   require 'rubygems'
   require 'theme_bandit'
 end
+
+

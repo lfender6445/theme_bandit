@@ -14,5 +14,11 @@ describe ThemeBandit::URLFormatter do
     path = '../doc/docs.css'
     assert_equal(resolve_dot_dots(host, path), 'www.example.com/demo/doc/docs.css')
   end
+  it '#cdn_to_fdq' do
+    src = '//cdn.optimizely.com/js/2953003.js'
+    assert_equal(cdn_to_fdq(src), "http:#{src}")
+    src = 'https://cdn.optimizely.com/js/2953003.js'
+    assert_equal(cdn_to_fdq(src), src)
+  end
 
 end

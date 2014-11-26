@@ -1,3 +1,5 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'pry'
 require 'rubygems'
 require 'minitest/autorun'
@@ -64,4 +66,14 @@ def stub_js
   stub_request(:any, url).to_return(body: '')
   url = 'http://www.example.com/js/script_2.js'
   stub_request(:any, url).to_return(body: '')
+end
+
+# supress log output when running tests
+module ThemeBandit
+  class Logger
+    class << self
+      def colorize(text, color_code)
+      end
+    end
+  end
 end

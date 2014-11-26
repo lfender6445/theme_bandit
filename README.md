@@ -37,7 +37,7 @@ and cause the application to blow up until adjusted.
 
 Add this line to your application's Gemfile:
 
-    gem 'theme_bandit', '~> 0.0.7'
+    gem 'theme_bandit', '~> 0.0.8'
 
 And then execute:
 

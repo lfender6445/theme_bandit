@@ -1,3 +1,4 @@
+require 'pry'
 module ThemeBandit
   module HTMLParser
     def revise_head_tags
@@ -13,11 +14,17 @@ module ThemeBandit
     end
 
     def remove_link_tags
-      document.search('link').remove
+      document.search('link').each do |node|
+        if node[:rel] == 'stylesheet'
+          node.remove
+        end
+      end
     end
 
     def remove_script_tags
-      document.search('script').remove
+      document.search('script').each do |node|
+        node.remove if node[:src]
+      end
     end
 
     def local_link_names

@@ -1,7 +1,6 @@
 require 'pry'
 module ThemeBandit
   module CSSParser
-
     include ThemeBandit::URLFormatter
 
     RE_IMPORT = /\@import\s*(?:url\s*)?(?:\()?(?:\s*)["']?([^'"\s\)]*)["']?\)?([\w\s\,^\]\(\))]*)\)?[;\n]?/
@@ -31,7 +30,7 @@ module ThemeBandit
     end
 
     def get_import_urls(file, file_name)
-      imports = file.scan(RE_IMPORT).map { |import| import.first }.select {|import| import[/\.css/] }
+      imports = file.scan(RE_IMPORT).map(&:first).select { |import| import[/\.css/] }
       imports_arr = []
       imports.each do |import|
         dot_dots_length = import.split('/').select { |x| x[/\.\./] }.length
@@ -51,6 +50,5 @@ module ThemeBandit
       end
       imports_arr.length > 0 ? imports_arr : nil
     end
-
   end
 end

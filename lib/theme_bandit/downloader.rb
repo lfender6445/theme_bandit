@@ -24,12 +24,10 @@ module ThemeBandit
     end
 
     def get_document(url)
-      begin
-        Logger.green "Downloading #{url}"
-        self.class.get(url, options)
-      rescue => e
-        Logger.red "request failed for #{url} #{e}"
-      end
+      Logger.green "Downloading #{url}"
+      self.class.get(url, options)
+    rescue => e
+      Logger.red "request failed for #{url} #{e}"
     end
   end
 end

@@ -60,7 +60,6 @@ def stub_style_with_import_css
   stub_request(:any, url).to_return(body: load_style_with_import_fixture)
 end
 
-
 def stub_js
   url = 'http://www.example.com/js/script.js'
   stub_request(:any, url).to_return(body: '')
@@ -72,7 +71,7 @@ end
 module ThemeBandit
   class Logger
     class << self
-      def colorize(text, color_code)
+      def colorize(_text, _color_code)
       end
     end
   end

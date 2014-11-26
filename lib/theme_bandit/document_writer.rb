@@ -32,7 +32,6 @@ module ThemeBandit
       write_html_file
     end
 
-
     def html
       document.to_html
     end
@@ -41,7 +40,7 @@ module ThemeBandit
       FileUtils.mkdir_p folder
     end
 
-    def download_css(files, these_are_import_files=false)
+    def download_css(files, these_are_import_files = false)
       files.each_with_index do |file, order|
         if these_are_import_files
           download_and_replace_import_in_css_file(file, order)

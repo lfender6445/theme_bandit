@@ -65,15 +65,15 @@ describe ThemeBandit::DocumentWriter do
 
       describe ThemeBandit::CSSParser do
         it '#get_css_files' do
-          assert_equal(@subject.get_css_files, ["http://www.example.com#{Dir.pwd}/theme/public/css/0_style.css", "http://www.example.com#{Dir.pwd}/theme/public/css/0_style_with_import.css" ])
+          assert_equal(@subject.get_css_files, ["http://www.example.com#{Dir.pwd}/theme/public/css/0_style.css", "http://www.example.com#{Dir.pwd}/theme/public/css/0_style_with_import.css"])
         end
 
         describe '#get_import_urls' do
           it 'returns false if none found' do
-            assert_equal(@subject.get_import_urls(load_css_fixture, 'import.css'), nil )
+            assert_equal(@subject.get_import_urls(load_css_fixture, 'import.css'), nil)
           end
           it 'returns import urls' do
-            expected = [{:destination=>"import.css", :rule=>"@import url('import.css');"}]
+            expected = [{ destination: 'import.css', rule: "@import url('import.css');" }]
             assert_equal(@subject.get_import_urls(load_style_with_import_fixture, 'style_with_import.css'), expected)
           end
         end

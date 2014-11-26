@@ -33,7 +33,6 @@ module ThemeBandit
       absolute_to_relative(File.read(index_html))
     end
 
-
     def absolute_to_relative(contents)
       contents.gsub("#{Dir.pwd}/theme/public", '')
     end

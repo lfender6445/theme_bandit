@@ -4,6 +4,7 @@ require_relative '../lib/theme_bandit'
 require 'rubygems'
 
 urls = [
+  'https://wp-themes.com/crawford/',
   'http://yootheme.com/demo/themes/joomla/2014/peak/index.php?style=default',
   'http://ign.com',
   'http://gamespot.com',

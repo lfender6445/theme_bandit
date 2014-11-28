@@ -11,9 +11,9 @@ describe ThemeBandit::URLFormatter do
 
   describe '#get_absolute_path' do
     it 'it plays nicely with dot dots' do
-      host = 'www.example.com/demo/abc/test.html'
+      host = '/demo/abc/test.html'
       path = '../doc/docs.css'
-      assert_equal(get_absolute_path(host, path), 'www.example.com/demo/doc/docs.css')
+      assert_equal(get_absolute_path(host, path), '/demo/doc/docs.css')
     end
 
     describe 'non root-domain themes' do

@@ -44,7 +44,7 @@ module ThemeBandit
     end
 
     def default_to_http(url)
-      url[/^http:\/\//] ? url : "http://#{url}"
+      url[/(^http:\/\/|^https:\/\/)/] ? url : "http://#{url}"
     end
   end
 end

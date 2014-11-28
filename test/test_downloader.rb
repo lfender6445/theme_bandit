@@ -15,7 +15,7 @@ describe ThemeBandit::Downloader do
     it 'requires url configuration' do
       ThemeBandit.configure { |config| config.url = nil }
       @subject.get_theme
-      assert_equal(ThemeBandit::Log.message, 'Invalid configuration, please configure through ./bin wrapper')
+      refute_empty(ThemeBandit::Log.message, 'Invalid configuration, please configure through ./bin wrapper')
     end
 
     describe 'attributes' do
@@ -23,8 +23,21 @@ describe ThemeBandit::Downloader do
         @instance = @subject.new(@url)
       end
 
-      it '#url' do
-        assert_equal(@instance.url, @url)
+      describe '#url' do
+        describe 'with scheme' do
+          it 'returns url' do
+            assert_equal(@instance.url, @url)
+          end
+        end
+
+        describe 'without scheme' do
+          before do
+            @instance = @subject.new('reddit.com')
+          end
+          it 'defaults to http' do
+            assert_equal(@instance.url, "http://reddit.com")
+          end
+        end
       end
 
       it '#options' do

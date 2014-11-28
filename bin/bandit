@@ -4,9 +4,7 @@ require 'pry' if ENV['DEBUG']
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
-require 'fileutils'
 require 'theme_bandit'
-require 'uri'
 require 'bundler'
 
 SUPPORTED_ENGINES = /^(erb|haml|slim)$/
@@ -54,11 +52,15 @@ def ask_user_for_domain
   url = $stdin.gets.chomp
   begin
     URI.parse(url)
-    return url
+    default_to_http url
   rescue => e
     ThemeBandit::Log.red e
     exit 0
   end
+end
+
+def default_to_http(url)
+  url[/^http:\/\//] ? url : "http://#{url}"
 end
 
 def ask_user_for_language

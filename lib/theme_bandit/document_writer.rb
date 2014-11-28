@@ -68,17 +68,13 @@ module ThemeBandit
 
     def download_single_css_file(file_name, order)
       doc = Downloader.fetch(file_name, {})
-      if doc
-        download_css_imports(doc.body, file_name) do |imports|
-          if imports
-            download_css(imports, true)
-          else
-            new_file_name = file_name.split('/').last
-            File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |file| file.write(doc) }
-          end
+      download_css_imports(doc.body, file_name) do |imports|
+        if imports
+          download_css(imports, true)
+        else
+          new_file_name = file_name.split('/').last
+          File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |file| file.write(doc) }
         end
-      else
-        log_failure file_name
       end
     end
 

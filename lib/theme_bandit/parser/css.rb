@@ -16,7 +16,9 @@ module ThemeBandit
 
     def link_tag_values
       link_tags.map do |tag|
-        href = URI.parse(tag.attribute('href'))
+        href = tag.attribute('href').to_s
+        href = cdn_to_fqd(href)
+        href = URI.parse(href)
         if href.absolute?
           strip_query_string href.to_s
         else

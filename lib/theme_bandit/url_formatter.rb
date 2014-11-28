@@ -16,10 +16,16 @@ module ThemeBandit
         new_path = new_path.gsub('../', '')
         old_path = old_path.split('/')
         old_path.pop(number_of_dot_dots + 1)
-        old_path.push(new_path).join('/')
+        new_path = old_path.push(new_path).join('/')
+        "#{path_with_leading_slash(new_path)}"
       else
-        new_path
+        "#{path_with_leading_slash(new_path)}"
       end
     end
+
+    def path_with_leading_slash(str)
+      str[/^\//] ? str : "/#{str}"
+    end
+
   end
 end

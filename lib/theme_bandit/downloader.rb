@@ -13,13 +13,13 @@ module ThemeBandit
     end
 
     def self.error
-      Log.red 'Invalid configuration, please configure through ./bin wrapper'
+      Log.red 'Invalid configuration, please configure through ./bin wrapper or ThemeBandit::Configure'
     end
 
     attr_reader :url, :options, :document, :error
 
     def initialize(url, options = {})
-      @url, @options = url, options
+      @url, @options = default_to_http(url), options
       @document = get_document(url)
     end
 
@@ -41,6 +41,10 @@ module ThemeBandit
       else
         Log.green "Downloading #{url}"
       end
+    end
+
+    def default_to_http(url)
+      url[/^http:\/\//] ? url : "http://#{url}"
     end
   end
 end

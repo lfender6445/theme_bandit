@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'uri'
 require 'nokogiri'
 

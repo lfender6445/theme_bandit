@@ -15,13 +15,14 @@ module ThemeBandit
     def script_tag_values
       script_tags.map do |tag|
         src = tag.attribute('src').to_s
-        src = cdn_to_fdq(src)
+        src = cdn_to_fqd(src)
         src = URI.parse(src)
         if src.absolute?
           strip_query_string src.to_s
         else
           new_src = strip_query_string(src.to_s)
-          absolute = resolve_dot_dots "#{@url.host}#{@url.path}", new_src
+          absolute_path = get_absolute_path "#{@url.path}", new_src
+          absolute = "#{@url.host}#{absolute_path}"
           "#{url.scheme}://#{absolute}"
         end
       end

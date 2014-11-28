@@ -4,20 +4,21 @@ module ThemeBandit
       str.split('?').first
     end
 
-    def cdn_to_fdq(src)
+    def cdn_to_fqd(src)
       src[/^\/\//] ? "http:#{src}" : src
     end
 
-    # returns an aboslute url with dot dot syntax removed
-    def resolve_dot_dots(host, path)
-      number_of_dot_dots = path.split('/').select { |v| v == '..' }.length
+    # returns resolved path, ready for use with host
+    def get_absolute_path(old_path, new_path)
+      number_of_dot_dots = new_path.split('/').select { |v| v == '..' }.length
       if number_of_dot_dots > 0
-        new_path = path.gsub('../', '')
-        new_host = host.split('/')
-        new_host.pop(number_of_dot_dots + 1)
-        new_host.push(new_path).join('/')
+        # TODO: should be separate method
+        new_path = new_path.gsub('../', '')
+        old_path = old_path.split('/')
+        old_path.pop(number_of_dot_dots + 1)
+        old_path.push(new_path).join('/')
       else
-        "#{host}#{path}"
+        new_path
       end
     end
   end

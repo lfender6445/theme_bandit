@@ -69,7 +69,7 @@ end
 
 # supress log output when running tests
 module ThemeBandit
-  class Logger
+  class Log
     class << self
       def colorize(_text, _color_code)
       end

@@ -53,24 +53,32 @@ module ThemeBandit
     def download_and_replace_import_in_css_file(file, order)
       destination = file[:destination]
       rule = file[:rule]
-      doc = Downloader.fetch(destination, {}).body
-      new_doc = @doc_with_imports.gsub(rule, doc)
-      new_file_name = @file_with_imports.split('/').last
-      File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |f| f.write(new_doc) }
-      download_css_imports(new_doc, destination) do |imports|
-        download_css(imports, true) if imports
+      doc = Downloader.fetch(destination, {})
+      if doc
+        new_doc = @doc_with_imports.gsub(rule, doc.body)
+        new_file_name = @file_with_imports.split('/').last
+        File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |f| f.write(new_doc) }
+        download_css_imports(new_doc, destination) do |imports|
+          download_css(imports, true) if imports
+        end
+      else
+        log_failure file_name
       end
     end
 
     def download_single_css_file(file_name, order)
-      doc = Downloader.fetch(file_name, {}).body
-      download_css_imports(doc, file_name) do |imports|
-        if imports
-          download_css(imports, true)
-        else
-          new_file_name = file_name.split('/').last
-          File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |file| file.write(doc) }
+      doc = Downloader.fetch(file_name, {})
+      if doc
+        download_css_imports(doc.body, file_name) do |imports|
+          if imports
+            download_css(imports, true)
+          else
+            new_file_name = file_name.split('/').last
+            File.open("#{CSS_FOLDER}#{order}_#{new_file_name}", 'w') { |file| file.write(doc) }
+          end
         end
+      else
+        log_failure file_name
       end
     end
 
@@ -88,13 +96,23 @@ module ThemeBandit
     def download_js(files)
       files.each_with_index do |file_name, order|
         doc = Downloader.fetch(file_name, {})
-        new_file = file_name.split('/').last
-        File.open("#{JS_FOLDER}#{order}_#{new_file}", 'w') { |file| file.write(doc.body) }
+        if doc
+          new_file = file_name.split('/').last
+          if doc.code != 200
+            log_failure(file_name, new_file)
+          end
+          File.open("#{JS_FOLDER}#{order}_#{new_file}", 'w') { |file| file.write(doc.body) }
+        end
       end
     end
 
     def write_html_file
       File.open("#{HTML_FOLDER}index.html", 'w') { |file| file.write(html) }
+    end
+
+    def log_failure(file_name, new_file_name)
+      Log.red "Failed to write #{file_name}. Please view error.log for more details"
+      Log.patch file_name, new_file_name
     end
   end
 end

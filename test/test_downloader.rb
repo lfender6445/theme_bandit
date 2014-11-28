@@ -15,7 +15,7 @@ describe ThemeBandit::Downloader do
     it 'requires url configuration' do
       ThemeBandit.configure { |config| config.url = nil }
       @subject.get_theme
-      assert_equal(ThemeBandit::Logger.message, 'Invalid configuration, please configure through ./bin wrapper')
+      assert_equal(ThemeBandit::Log.message, 'Invalid configuration, please configure through ./bin wrapper')
     end
 
     describe 'attributes' do

@@ -1,4 +1,3 @@
-require 'pry'
 module ThemeBandit
   module HTMLParser
     def revise_head_tags

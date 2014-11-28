@@ -1,4 +1,3 @@
-require 'pry'
 module ThemeBandit
   module CSSParser
     include ThemeBandit::URLFormatter
@@ -21,10 +20,10 @@ module ThemeBandit
         if href.absolute?
           strip_query_string href.to_s
         else
-          # strip_query_string "#{url.scheme}://#{url.host}#{href}"
           new_href = strip_query_string(href.to_s)
-          absolute = resolve_dot_dots "#{@url.host}#{@url.path}", new_href
-          "#{url.scheme}://#{absolute}"
+          absolute_path = get_absolute_path "#{@url.path}", new_href
+          absolute = "#{@url.host}#{absolute_path}"
+          "#{@url.scheme}://#{absolute}"
         end
       end
     end

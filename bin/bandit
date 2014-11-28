@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'pry' if ENV['DEBUG']
+
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'fileutils'
@@ -28,8 +30,14 @@ def init
 end
 
 def start_fresh
-  `rm -rf theme`
-  make_a_directory
+  if File.directory?('theme')
+    ThemeBandit::Log.yellow "Deleting #{Dir.pwd}/theme/* - is this ok? (y/n)"
+    answer = $stdin.gets.chomp
+    if answer == 'y'
+      `rm -rf theme`
+      make_a_directory
+    end
+  end
 end
 
 def generate_app(document)
@@ -44,13 +52,12 @@ end
 def ask_user_for_domain
   puts 'Enter the URL of the theme you wish to download (example: http://www.google.com)'
   url = $stdin.gets.chomp
-
   begin
     URI.parse(url)
     return url
   rescue => e
-    ThemeBandit::Logger.red e
-    exit
+    ThemeBandit::Log.red e
+    exit 0
   end
 end
 
@@ -59,8 +66,8 @@ def ask_user_for_language
   answer = $stdin.gets.chomp
   answer = 'erb' if answer == ''
   unless match = answer.match(SUPPORTED_ENGINES)
-    ThemeBandit::Logger.red 'You must select a supported template engine (erb, haml, or slim)'
-    exit
+    ThemeBandit::Log.red 'You must select a supported template engine (erb, haml, or slim)'
+    exit 0
   end
   match[0]
 end
@@ -72,20 +79,20 @@ def ask_user_to_start_rack_app
     app_message
     Dir.chdir 'theme' do
       Bundler.with_clean_env do
-        ThemeBandit::Logger.green "running `bundle` in #{Dir.pwd}/"
+        ThemeBandit::Log.green "running `bundle` in #{Dir.pwd}/"
         `bundle install`
-        ThemeBandit::Logger.green 'running `bundle exec rackup -p 3000`'
+        ThemeBandit::Log.green 'running `bundle exec rackup -p 3000`'
         system('bundle exec rackup -p 3000')
       end
     end
   else
     app_message
-    ThemeBandit::Logger.red "Don't forget to bundle before starting!"
+    ThemeBandit::Log.yellow "Don't forget to bundle before starting!"
   end
 end
 
 def app_message
-  puts "Your rack app can be found at #{Dir.pwd}/theme/"
+  ThemeBandit::Log.yellow "Your rack app can be found at #{Dir.pwd}/theme/"
 end
 
 begin

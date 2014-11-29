@@ -4,6 +4,12 @@ module ThemeBandit
       str.split('?').first
     end
 
+    def default_to_http(url)
+      url[/(^http:\/\/|^https:\/\/)/] ? url : "http://#{url}"
+    end
+
+    module_function :default_to_http
+
     def cdn_to_fqd(src)
       src[/^\/\//] ? "http:#{src}" : src
     end

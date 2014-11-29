@@ -1,11 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'pry' if ENV['DEBUG']
-
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'theme_bandit'
-require 'bundler'
 
 SUPPORTED_ENGINES = /^(erb|haml|slim)$/
 
@@ -52,15 +50,11 @@ def ask_user_for_domain
   url = $stdin.gets.chomp
   begin
     URI.parse(url)
-    default_to_http url
+    ThemeBandit::URLFormatter.default_to_http url
   rescue => e
     ThemeBandit::Log.red e
     exit 0
   end
-end
-
-def default_to_http(url)
-  url[/(^http:\/\/|^https:\/\/)/] ? url : "http://#{url}"
 end
 
 def ask_user_for_language
@@ -80,12 +74,7 @@ def ask_user_to_start_rack_app
   if answer == 'y'
     app_message
     Dir.chdir 'theme' do
-      Bundler.with_clean_env do
-        ThemeBandit::Log.green "running `bundle` in #{Dir.pwd}/"
-        `bundle install`
-        ThemeBandit::Log.green 'running `bundle exec rackup -p 3000`'
-        system('bundle exec rackup -p 3000')
-      end
+      Bundler.with_clean_env { start_app }
     end
   else
     app_message
@@ -97,10 +86,17 @@ def app_message
   ThemeBandit::Log.yellow "Your rack app can be found at #{Dir.pwd}/theme/"
 end
 
+def start_app
+  ThemeBandit::Log.green "running `bundle` in #{Dir.pwd}/"
+  `bundle install`
+  ThemeBandit::Log.green 'running `bundle exec rackup -p 3000`'
+  system('bundle exec rackup -p 3000')
+end
+
 begin
   require 'theme_bandit'
   init
-rescue LoadError => e
+rescue LoadError
   require 'rubygems'
   require 'theme_bandit'
 end

@@ -1,3 +1,4 @@
+require 'bundler'
 require 'fileutils'
 require 'uri'
 require 'nokogiri'

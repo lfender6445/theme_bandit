@@ -19,7 +19,7 @@ module ThemeBandit
     attr_reader :url, :options, :document, :error
 
     def initialize(url, options = {})
-      @url, @options = default_to_http(url), options
+      @url, @options = ThemeBandit::URLFormatter.default_to_http(url), options
       @document = get_document(url)
     end
 
@@ -41,10 +41,6 @@ module ThemeBandit
       else
         Log.green "Downloading #{url}"
       end
-    end
-
-    def default_to_http(url)
-      url[/(^http:\/\/|^https:\/\/)/] ? url : "http://#{url}"
     end
   end
 end

@@ -1,4 +1,6 @@
 # theme_bandit
+[![Code Climate](https://codeclimate.com/github/lfender6445/theme_bandit/badges/gpa.svg)](https://codeclimate.com/github/lfender6445/theme_bandit)
+[![Test Coverage](https://codeclimate.com/github/lfender6445/theme_bandit/badges/coverage.svg)](https://codeclimate.com/github/lfender6445/theme_bandit)
 
 Enjoy rapid prototyping with theme bandit :heart:
 

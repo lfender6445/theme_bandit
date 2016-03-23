@@ -10,7 +10,7 @@ module ThemeBandit
 
     def link_tags
       document.css('link').select do |tag|
-        tag.attribute('rel').value == 'stylesheet'
+        tag.attribute('rel') && tag.attribute('rel').value == 'stylesheet'
       end
     end
 

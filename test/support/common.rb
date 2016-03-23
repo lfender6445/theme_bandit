@@ -1,5 +1,7 @@
 def load_html_fixture
-  @fixture ||= File.read(File.open("#{Dir.pwd}/test/fixtures/index.html", 'r'))
+  # @fixture ||= File.read(File.open("#{Dir.pwd}/test/fixtures/index.html", 'r'))
+
+  @fixture ||= File.read(File.expand_path("../../fixtures/index.html", __FILE__))
 end
 
 def load_css_fixture

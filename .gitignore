@@ -29,3 +29,4 @@ mkmf.log
 coverage
 *.swp
 *.dump
+.idea
